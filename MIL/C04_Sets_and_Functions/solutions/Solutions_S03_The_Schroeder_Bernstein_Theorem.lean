@@ -34,7 +34,7 @@ theorem sb_right_inv {x : α} (hx : x ∉ sbSet f g) : g (invFun g x) = x := by
     assumption
   exact invFun_eq this
 
-theorem sb_injective (hf : Injective f) (hg : Injective g) : Injective (sbFun f g) := by
+theorem sb_injective (hf : Injective f) : Injective (sbFun f g) := by
   set A := sbSet f g with A_def
   set h := sbFun f g with h_def
   intro x₁ x₂
@@ -46,7 +46,7 @@ theorem sb_injective (hf : Injective f) (hg : Injective g) : Injective (sbFun f 
     · symm
       apply this hxeq.symm xA.symm (xA.resolve_left x₁A)
     have x₂A : x₂ ∈ A := by
-      apply not_imp_self.mp
+      apply _root_.not_imp_self.mp
       intro (x₂nA : x₂ ∉ A)
       rw [if_pos x₁A, if_neg x₂nA] at hxeq
       rw [A_def, sbSet, mem_iUnion] at x₁A
@@ -63,7 +63,7 @@ theorem sb_injective (hf : Injective f) (hg : Injective g) : Injective (sbFun f 
   rw [if_neg xA.1, if_neg xA.2] at hxeq
   rw [← sb_right_inv f g xA.1, hxeq, sb_right_inv f g xA.2]
 
-theorem sb_surjective (hf : Injective f) (hg : Injective g) : Surjective (sbFun f g) := by
+theorem sb_surjective (hg : Injective g) : Surjective (sbFun f g) := by
   set A := sbSet f g with A_def
   set h := sbFun f g with h_def
   intro y

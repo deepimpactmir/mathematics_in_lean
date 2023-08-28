@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>4. Sets and Functions &mdash; Mathematics in Lean 0.1 documentation</title>
@@ -13,11 +13,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -31,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Mathematics in Lean
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Mathematics in Lean
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -76,8 +80,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li><span class="section-number">4. </span>Sets and Functions</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4. </span>Sets and Functions</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/C04_Sets_and_Functions.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -179,20 +183,11 @@ entirely:</p>
 <p>What is going on here is known as <em>definitional reduction</em>:
 to make sense of the <code class="docutils literal notranslate"><span class="pre">intro</span></code> command and the anonymous constructors
 Lean is forced to expand the definitions.
-The following examples also illustrate the phenomenon:</p>
-<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">theorem</span> <span class="n">foo</span> <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="n">s</span> <span class="bp">&#8838;</span> <span class="n">t</span><span class="o">)</span> <span class="o">:</span> <span class="n">s</span> <span class="bp">&#8745;</span> <span class="n">u</span> <span class="bp">&#8838;</span> <span class="n">t</span> <span class="bp">&#8745;</span> <span class="n">u</span> <span class="o">:=</span>
-  <span class="k">fun</span> <span class="n">x</span> <span class="o">&#10216;</span><span class="n">xs</span><span class="o">,</span> <span class="n">xu</span><span class="o">&#10217;</span> <span class="bp">&#8614;</span> <span class="o">&#10216;</span><span class="n">h</span> <span class="n">xs</span><span class="o">,</span> <span class="n">xu</span><span class="o">&#10217;</span>
-
-<span class="kd">example</span> <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="n">s</span> <span class="bp">&#8838;</span> <span class="n">t</span><span class="o">)</span> <span class="o">:</span> <span class="n">s</span> <span class="bp">&#8745;</span> <span class="n">u</span> <span class="bp">&#8838;</span> <span class="n">t</span> <span class="bp">&#8745;</span> <span class="n">u</span> <span class="o">:=</span>
+The following example also illustrate the phenomenon:</p>
+<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">example</span> <span class="o">(</span><span class="n">h</span> <span class="o">:</span> <span class="n">s</span> <span class="bp">&#8838;</span> <span class="n">t</span><span class="o">)</span> <span class="o">:</span> <span class="n">s</span> <span class="bp">&#8745;</span> <span class="n">u</span> <span class="bp">&#8838;</span> <span class="n">t</span> <span class="bp">&#8745;</span> <span class="n">u</span> <span class="o">:=</span>
   <span class="k">fun</span> <span class="n">x</span> <span class="o">&#10216;</span><span class="n">xs</span><span class="o">,</span> <span class="n">xu</span><span class="o">&#10217;</span> <span class="bp">&#8614;</span> <span class="o">&#10216;</span><span class="n">h</span> <span class="n">xs</span><span class="o">,</span> <span class="n">xu</span><span class="o">&#10217;</span>
 </pre></div>
 </div>
-<p>Due to a quirk of how Lean processes its input,
-the first example fails if we replace <code class="docutils literal notranslate"><span class="pre">theorem</span> <span class="pre">foo</span></code> with <code class="docutils literal notranslate"><span class="pre">example</span></code>.
-This illustrates the pitfalls of relying on definitional reduction
-too heavily.
-It is often convenient,
-but sometimes we have to fall back on unfolding definitions manually.</p>
 <p>To deal with unions, we can use <code class="docutils literal notranslate"><span class="pre">Set.union_def</span></code> and <code class="docutils literal notranslate"><span class="pre">Set.mem_union</span></code>.
 Since <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&#8712;</span> <span class="pre">s</span> <span class="pre">&#8746;</span> <span class="pre">t</span></code> unfolds to <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&#8712;</span> <span class="pre">s</span> <span class="pre">&#8744;</span> <span class="pre">x</span> <span class="pre">&#8712;</span> <span class="pre">t</span></code>,
 we can also use the <code class="docutils literal notranslate"><span class="pre">cases</span></code> tactic to force a definitional reduction.</p>
@@ -689,39 +684,19 @@ and then calling <code class="docutils literal notranslate"><span class="pre">si
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variable</span> <span class="o">{</span><span class="n">I</span> <span class="o">:</span> <span class="kt">Type</span><span class="bp">*</span><span class="o">}</span> <span class="o">(</span><span class="n">A</span> <span class="o">:</span> <span class="n">I</span> <span class="bp">&#8594;</span> <span class="n">Set</span> <span class="n">&#945;</span><span class="o">)</span> <span class="o">(</span><span class="n">B</span> <span class="o">:</span> <span class="n">I</span> <span class="bp">&#8594;</span> <span class="n">Set</span> <span class="n">&#946;</span><span class="o">)</span>
 
 <span class="kd">example</span> <span class="o">:</span> <span class="o">(</span><span class="n">f</span> <span class="bp">&#39;&#39;</span> <span class="bp">&#8899;</span> <span class="n">i</span><span class="o">,</span> <span class="n">A</span> <span class="n">i</span><span class="o">)</span> <span class="bp">=</span> <span class="bp">&#8899;</span> <span class="n">i</span><span class="o">,</span> <span class="n">f</span> <span class="bp">&#39;&#39;</span> <span class="n">A</span> <span class="n">i</span> <span class="o">:=</span> <span class="kd">by</span>
-  <span class="n">ext</span> <span class="n">y</span><span class="bp">;</span> <span class="n">simp</span>
-  <span class="n">constructor</span>
-  <span class="bp">&#183;</span> <span class="n">rintro</span> <span class="o">&#10216;</span><span class="n">x</span><span class="o">,</span> <span class="o">&#10216;</span><span class="n">i</span><span class="o">,</span> <span class="n">xAi</span><span class="o">&#10217;,</span> <span class="n">fxeq</span><span class="o">&#10217;</span>
-    <span class="n">use</span> <span class="n">i</span><span class="o">,</span> <span class="n">x</span>
-  <span class="n">rintro</span> <span class="o">&#10216;</span><span class="n">i</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">xAi</span><span class="o">,</span> <span class="n">fxeq</span><span class="o">&#10217;</span>
-  <span class="n">exact</span> <span class="o">&#10216;</span><span class="n">x</span><span class="o">,</span> <span class="o">&#10216;</span><span class="n">i</span><span class="o">,</span> <span class="n">xAi</span><span class="o">&#10217;,</span> <span class="n">fxeq</span><span class="o">&#10217;</span>
+  <span class="gr">sorry</span>
 
 <span class="kd">example</span> <span class="o">:</span> <span class="o">(</span><span class="n">f</span> <span class="bp">&#39;&#39;</span> <span class="bp">&#8898;</span> <span class="n">i</span><span class="o">,</span> <span class="n">A</span> <span class="n">i</span><span class="o">)</span> <span class="bp">&#8838;</span> <span class="bp">&#8898;</span> <span class="n">i</span><span class="o">,</span> <span class="n">f</span> <span class="bp">&#39;&#39;</span> <span class="n">A</span> <span class="n">i</span> <span class="o">:=</span> <span class="kd">by</span>
-  <span class="n">intro</span> <span class="n">y</span><span class="bp">;</span> <span class="n">simp</span>
-  <span class="n">intro</span> <span class="n">x</span> <span class="n">h</span> <span class="n">fxeq</span> <span class="n">i</span>
-  <span class="n">use</span> <span class="n">x</span>
-  <span class="n">exact</span> <span class="o">&#10216;</span><span class="n">h</span> <span class="n">i</span><span class="o">,</span> <span class="n">fxeq</span><span class="o">&#10217;</span>
+  <span class="gr">sorry</span>
 
 <span class="kd">example</span> <span class="o">(</span><span class="n">i</span> <span class="o">:</span> <span class="n">I</span><span class="o">)</span> <span class="o">(</span><span class="n">injf</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">f</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="bp">&#8898;</span> <span class="n">i</span><span class="o">,</span> <span class="n">f</span> <span class="bp">&#39;&#39;</span> <span class="n">A</span> <span class="n">i</span><span class="o">)</span> <span class="bp">&#8838;</span> <span class="n">f</span> <span class="bp">&#39;&#39;</span> <span class="bp">&#8898;</span> <span class="n">i</span><span class="o">,</span> <span class="n">A</span> <span class="n">i</span> <span class="o">:=</span> <span class="kd">by</span>
-  <span class="n">intro</span> <span class="n">y</span><span class="bp">;</span> <span class="n">simp</span>
-  <span class="n">intro</span> <span class="n">h</span>
-  <span class="n">rcases</span> <span class="n">h</span> <span class="n">i</span> <span class="k">with</span> <span class="o">&#10216;</span><span class="n">x</span><span class="o">,</span> <span class="n">xAi</span><span class="o">,</span> <span class="n">fxeq</span><span class="o">&#10217;</span>
-  <span class="n">use</span> <span class="n">x</span><span class="bp">;</span> <span class="n">constructor</span>
-  <span class="bp">&#183;</span> <span class="n">intro</span> <span class="n">i&#39;</span>
-    <span class="n">rcases</span> <span class="n">h</span> <span class="n">i&#39;</span> <span class="k">with</span> <span class="o">&#10216;</span><span class="n">x&#39;</span><span class="o">,</span> <span class="n">x&#39;Ai</span><span class="o">,</span> <span class="n">fx&#39;eq</span><span class="o">&#10217;</span>
-    <span class="k">have</span> <span class="o">:</span> <span class="n">f</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">f</span> <span class="n">x&#39;</span> <span class="o">:=</span> <span class="kd">by</span> <span class="n">rw</span> <span class="o">[</span><span class="n">fxeq</span><span class="o">,</span> <span class="n">fx&#39;eq</span><span class="o">]</span>
-    <span class="k">have</span> <span class="o">:</span> <span class="n">x</span> <span class="bp">=</span> <span class="n">x&#39;</span> <span class="o">:=</span> <span class="n">injf</span> <span class="n">this</span>
-    <span class="n">rw</span> <span class="o">[</span><span class="n">this</span><span class="o">]</span>
-    <span class="n">exact</span> <span class="n">x&#39;Ai</span>
-  <span class="n">exact</span> <span class="n">fxeq</span>
+  <span class="gr">sorry</span>
 
 <span class="kd">example</span> <span class="o">:</span> <span class="o">(</span><span class="n">f</span> <span class="bp">&#8315;&#185;&#39;</span> <span class="bp">&#8899;</span> <span class="n">i</span><span class="o">,</span> <span class="n">B</span> <span class="n">i</span><span class="o">)</span> <span class="bp">=</span> <span class="bp">&#8899;</span> <span class="n">i</span><span class="o">,</span> <span class="n">f</span> <span class="bp">&#8315;&#185;&#39;</span> <span class="n">B</span> <span class="n">i</span> <span class="o">:=</span> <span class="kd">by</span>
-  <span class="n">ext</span> <span class="n">x</span>
-  <span class="n">simp</span>
+  <span class="gr">sorry</span>
 
 <span class="kd">example</span> <span class="o">:</span> <span class="o">(</span><span class="n">f</span> <span class="bp">&#8315;&#185;&#39;</span> <span class="bp">&#8898;</span> <span class="n">i</span><span class="o">,</span> <span class="n">B</span> <span class="n">i</span><span class="o">)</span> <span class="bp">=</span> <span class="bp">&#8898;</span> <span class="n">i</span><span class="o">,</span> <span class="n">f</span> <span class="bp">&#8315;&#185;&#39;</span> <span class="n">B</span> <span class="n">i</span> <span class="o">:=</span> <span class="kd">by</span>
-  <span class="n">ext</span> <span class="n">x</span>
-  <span class="n">simp</span>
+  <span class="gr">sorry</span>
 </pre></div>
 </div>
 <p>The library defines a predicate <code class="docutils literal notranslate"><span class="pre">InjOn</span> <span class="pre">f</span> <span class="pre">s</span></code> to say that
@@ -824,7 +799,7 @@ as follows:</p>
   <span class="n">exact</span> <span class="n">Classical.choose_spec</span> <span class="n">h</span>
 </pre></div>
 </div>
-<p>The lines <code class="docutils literal notranslate"><span class="pre">noncomputable</span> <span class="pre">theory</span></code> and <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">Classical</span></code>
+<p>The lines <code class="docutils literal notranslate"><span class="pre">noncomputable</span> <span class="pre">section</span></code> and <code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">Classical</span></code>
 are needed because we are using classical logic in an essential way.
 On input <code class="docutils literal notranslate"><span class="pre">y</span></code>, the function <code class="docutils literal notranslate"><span class="pre">inverse</span> <span class="pre">f</span></code>
 returns some value of <code class="docutils literal notranslate"><span class="pre">x</span></code> satisfying <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span></code> if there is one,
@@ -835,6 +810,8 @@ since in the positive case, the value returned,
 The identity <code class="docutils literal notranslate"><span class="pre">dif_pos</span> <span class="pre">h</span></code> rewrites <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">h</span> <span class="pre">:</span> <span class="pre">e</span> <span class="pre">then</span> <span class="pre">a</span> <span class="pre">else</span> <span class="pre">b</span></code>
 to <code class="docutils literal notranslate"><span class="pre">a</span></code> given <code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">:</span> <span class="pre">e</span></code>,
 and, similarly, <code class="docutils literal notranslate"><span class="pre">dif_neg</span> <span class="pre">h</span></code> rewrites it to <code class="docutils literal notranslate"><span class="pre">b</span></code> given <code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">:</span> <span class="pre">&#172;</span> <span class="pre">e</span></code>.
+There are also versions <code class="docutils literal notranslate"><span class="pre">if_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">if_neg</span></code> that works for non-dependent
+if constructions and will be used in the next section.
 The theorem <code class="docutils literal notranslate"><span class="pre">inverse_spec</span></code> says that <code class="docutils literal notranslate"><span class="pre">inverse</span> <span class="pre">f</span></code>
 meets the first part of this specification.</p>
 <p>Don&#8217;t worry if you do not fully understand how these work.
@@ -995,13 +972,13 @@ and a right inverse if <code class="docutils literal notranslate"><span class="p
   <span class="bp">&#8899;</span> <span class="n">n</span><span class="o">,</span> <span class="n">sbAux</span> <span class="n">f</span> <span class="n">g</span> <span class="n">n</span>
 </pre></div>
 </div>
-<p>The definition <code class="docutils literal notranslate"><span class="pre">sb_aux</span></code> is an example of a <em>recursive definition</em>,
+<p>The definition <code class="docutils literal notranslate"><span class="pre">sbAux</span></code> is an example of a <em>recursive definition</em>,
 which we will explain in the next chapter.
 It defines a sequence of sets</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}S_0 &amp;= \alpha &#8726; g(\beta) \\
 S_{n+1} &amp;= g(f(S_n)).\end{split}\]</div>
-<p>The definition <code class="docutils literal notranslate"><span class="pre">sb_set</span></code> corresponds to the set
+<p>The definition <code class="docutils literal notranslate"><span class="pre">sbSet</span></code> corresponds to the set
 <span class="math notranslate nohighlight">\(A = \bigcup_{n \in \mathbb{N}} S_n\)</span> in our proof sketch.
 The function <span class="math notranslate nohighlight">\(h\)</span> described above is now defined as follows:</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">def</span> <span class="n">sbFun</span> <span class="o">(</span><span class="n">x</span> <span class="o">:</span> <span class="n">&#945;</span><span class="o">)</span> <span class="o">:</span> <span class="n">&#946;</span> <span class="o">:=</span>
@@ -1017,12 +994,12 @@ contained in <span class="math notranslate nohighlight">\(g(\beta)\)</span>.
 As a result, for every <span class="math notranslate nohighlight">\(x\)</span> in the complement of <span class="math notranslate nohighlight">\(A\)</span>,
 there is a <span class="math notranslate nohighlight">\(y\)</span> such that <span class="math notranslate nohighlight">\(g(y) = x\)</span>.
 (By the injectivity of <span class="math notranslate nohighlight">\(g\)</span>, this <span class="math notranslate nohighlight">\(y\)</span> is unique,
-but next theorem says only that <code class="docutils literal notranslate"><span class="pre">inv_fun</span> <span class="pre">g</span> <span class="pre">x</span></code> returns some <code class="docutils literal notranslate"><span class="pre">y</span></code>
+but next theorem says only that <code class="docutils literal notranslate"><span class="pre">invFun</span> <span class="pre">g</span> <span class="pre">x</span></code> returns some <code class="docutils literal notranslate"><span class="pre">y</span></code>
 such that <code class="docutils literal notranslate"><span class="pre">g</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">x</span></code>.)</p>
 <p>Step through the proof below, make sure you understand what is going on,
 and fill in the remaining parts.
-You will need to use <code class="docutils literal notranslate"><span class="pre">inv_fun_eq</span></code> at the end.
-Notice that rewriting with <code class="docutils literal notranslate"><span class="pre">sb_aux</span></code> here replaces <code class="docutils literal notranslate"><span class="pre">sb_aux</span> <span class="pre">f</span> <span class="pre">g</span> <span class="pre">0</span></code>
+You will need to use <code class="docutils literal notranslate"><span class="pre">invFun_eq</span></code> at the end.
+Notice that rewriting with <code class="docutils literal notranslate"><span class="pre">sbAux</span></code> here replaces <code class="docutils literal notranslate"><span class="pre">sbAux</span> <span class="pre">f</span> <span class="pre">g</span> <span class="pre">0</span></code>
 with the right-hand side of the corresponding defining equation.</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">theorem</span> <span class="n">sb_right_inv</span> <span class="o">{</span><span class="n">x</span> <span class="o">:</span> <span class="n">&#945;</span><span class="o">}</span> <span class="o">(</span><span class="n">hx</span> <span class="o">:</span> <span class="n">x</span> <span class="bp">&#8713;</span> <span class="n">sbSet</span> <span class="n">f</span> <span class="n">g</span><span class="o">)</span> <span class="o">:</span> <span class="n">g</span> <span class="o">(</span><span class="n">invFun</span> <span class="n">g</span> <span class="n">x</span><span class="o">)</span> <span class="bp">=</span> <span class="n">x</span> <span class="o">:=</span> <span class="kd">by</span>
   <span class="k">have</span> <span class="o">:</span> <span class="n">x</span> <span class="bp">&#8712;</span> <span class="n">g</span> <span class="bp">&#39;&#39;</span> <span class="n">univ</span> <span class="o">:=</span> <span class="kd">by</span>
@@ -1057,7 +1034,7 @@ Applying <span class="math notranslate nohighlight">\(g\)</span> to both sides y
 <p>Once again, we encourage you to step through the following proof
 to see how the argument plays out in Lean.
 See if you can finish off the proof using <code class="docutils literal notranslate"><span class="pre">sb_right_inv</span></code>.</p>
-<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">theorem</span> <span class="n">sb_injective</span> <span class="o">(</span><span class="n">hf</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">f</span><span class="o">)</span> <span class="o">(</span><span class="n">hg</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">g</span><span class="o">)</span> <span class="o">:</span> <span class="n">Injective</span> <span class="o">(</span><span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span><span class="o">)</span> <span class="o">:=</span> <span class="kd">by</span>
+<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">theorem</span> <span class="n">sb_injective</span> <span class="o">(</span><span class="n">hf</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">f</span><span class="o">)</span> <span class="o">:</span> <span class="n">Injective</span> <span class="o">(</span><span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span><span class="o">)</span> <span class="o">:=</span> <span class="kd">by</span>
   <span class="n">set</span> <span class="n">A</span> <span class="o">:=</span> <span class="n">sbSet</span> <span class="n">f</span> <span class="n">g</span> <span class="k">with</span> <span class="n">A_def</span>
   <span class="n">set</span> <span class="n">h</span> <span class="o">:=</span> <span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span> <span class="k">with</span> <span class="n">h_def</span>
   <span class="n">intro</span> <span class="n">x&#8321;</span> <span class="n">x&#8322;</span>
@@ -1069,7 +1046,7 @@ See if you can finish off the proof using <code class="docutils literal notransl
     <span class="bp">&#183;</span> <span class="n">symm</span>
       <span class="n">apply</span> <span class="n">this</span> <span class="n">hxeq.symm</span> <span class="n">xA.symm</span> <span class="o">(</span><span class="n">xA.resolve_left</span> <span class="n">x&#8321;A</span><span class="o">)</span>
     <span class="k">have</span> <span class="n">x&#8322;A</span> <span class="o">:</span> <span class="n">x&#8322;</span> <span class="bp">&#8712;</span> <span class="n">A</span> <span class="o">:=</span> <span class="kd">by</span>
-      <span class="n">apply</span> <span class="n">not_imp_self.mp</span>
+      <span class="n">apply</span> <span class="n">_root_.not_imp_self.mp</span>
       <span class="n">intro</span> <span class="o">(</span><span class="n">x&#8322;nA</span> <span class="o">:</span> <span class="n">x&#8322;</span> <span class="bp">&#8713;</span> <span class="n">A</span><span class="o">)</span>
       <span class="n">rw</span> <span class="o">[</span><span class="n">if_pos</span> <span class="n">x&#8321;A</span><span class="o">,</span> <span class="n">if_neg</span> <span class="n">x&#8322;nA</span><span class="o">]</span> <span class="n">at</span> <span class="n">hxeq</span>
       <span class="n">rw</span> <span class="o">[</span><span class="n">A_def</span><span class="o">,</span> <span class="n">sbSet</span><span class="o">,</span> <span class="n">mem_iUnion</span><span class="o">]</span> <span class="n">at</span> <span class="n">x&#8321;A</span>
@@ -1087,7 +1064,7 @@ See if you can finish off the proof using <code class="docutils literal notransl
 </div>
 <p>The proof introduces some new tactics.
 To start with, notice the <code class="docutils literal notranslate"><span class="pre">set</span></code> tactic, which introduces abbreviations
-<code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">h</span></code> for <code class="docutils literal notranslate"><span class="pre">sb_set</span> <span class="pre">f</span> <span class="pre">g</span></code> and <code class="docutils literal notranslate"><span class="pre">sb_fun</span> <span class="pre">f</span> <span class="pre">g</span></code> respectively.
+<code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">h</span></code> for <code class="docutils literal notranslate"><span class="pre">sbSet</span> <span class="pre">f</span> <span class="pre">g</span></code> and <code class="docutils literal notranslate"><span class="pre">sb_fun</span> <span class="pre">f</span> <span class="pre">g</span></code> respectively.
 We name the corresponding defining equations <code class="docutils literal notranslate"><span class="pre">A_def</span></code> and <code class="docutils literal notranslate"><span class="pre">h_def</span></code>.
 The abbreviations are definitional, which is to say, Lean will sometimes
 unfold them automatically when needed.
@@ -1112,11 +1089,11 @@ In the case where <span class="math notranslate nohighlight">\(g(y)\)</span> is 
 we immediately have <span class="math notranslate nohighlight">\(h(g(y))= y\)</span>, and we are done.</p>
 <p>Once again, we encourage you to step through the proof and fill in
 the missing parts.
-The tactic <code class="docutils literal notranslate"><span class="pre">cases</span> <span class="pre">n</span> <span class="pre">with</span> <span class="pre">n</span></code> splits on the cases <code class="docutils literal notranslate"><span class="pre">g</span> <span class="pre">y</span> <span class="pre">&#8712;</span> <span class="pre">sb_aux</span> <span class="pre">f</span> <span class="pre">g</span> <span class="pre">0</span></code>
-and <code class="docutils literal notranslate"><span class="pre">g</span> <span class="pre">y</span> <span class="pre">&#8712;</span> <span class="pre">sb_aux</span> <span class="pre">f</span> <span class="pre">g</span> <span class="pre">n.succ</span></code>.
-In both cases, calling the simplifier with <code class="docutils literal notranslate"><span class="pre">simp</span> <span class="pre">[sb_aux]</span></code>
-applies the corresponding defining equation of <code class="docutils literal notranslate"><span class="pre">sb_aux</span></code>.</p>
-<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">theorem</span> <span class="n">sb_surjective</span> <span class="o">(</span><span class="n">hf</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">f</span><span class="o">)</span> <span class="o">(</span><span class="n">hg</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">g</span><span class="o">)</span> <span class="o">:</span> <span class="n">Surjective</span> <span class="o">(</span><span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span><span class="o">)</span> <span class="o">:=</span> <span class="kd">by</span>
+The tactic <code class="docutils literal notranslate"><span class="pre">rcases</span> <span class="pre">n</span> <span class="pre">with</span> <span class="pre">_</span> <span class="pre">|</span> <span class="pre">n</span></code> splits on the cases <code class="docutils literal notranslate"><span class="pre">g</span> <span class="pre">y</span> <span class="pre">&#8712;</span> <span class="pre">sbAux</span> <span class="pre">f</span> <span class="pre">g</span> <span class="pre">0</span></code>
+and <code class="docutils literal notranslate"><span class="pre">g</span> <span class="pre">y</span> <span class="pre">&#8712;</span> <span class="pre">sbAux</span> <span class="pre">f</span> <span class="pre">g</span> <span class="pre">(n</span> <span class="pre">+</span> <span class="pre">1)</span></code>.
+In both cases, calling the simplifier with <code class="docutils literal notranslate"><span class="pre">simp</span> <span class="pre">[sbAux]</span></code>
+applies the corresponding defining equation of <code class="docutils literal notranslate"><span class="pre">sbAux</span></code>.</p>
+<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">theorem</span> <span class="n">sb_surjective</span> <span class="o">(</span><span class="n">hg</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">g</span><span class="o">)</span> <span class="o">:</span> <span class="n">Surjective</span> <span class="o">(</span><span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span><span class="o">)</span> <span class="o">:=</span> <span class="kd">by</span>
   <span class="n">set</span> <span class="n">A</span> <span class="o">:=</span> <span class="n">sbSet</span> <span class="n">f</span> <span class="n">g</span> <span class="k">with</span> <span class="n">A_def</span>
   <span class="n">set</span> <span class="n">h</span> <span class="o">:=</span> <span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span> <span class="k">with</span> <span class="n">h_def</span>
   <span class="n">intro</span> <span class="n">y</span>
@@ -1141,7 +1118,7 @@ and the proof uses the fact that <code class="docutils literal notranslate"><spa
 <code class="docutils literal notranslate"><span class="pre">Injective</span> <span class="pre">h</span> <span class="pre">&#8743;</span> <span class="pre">Surjective</span> <span class="pre">h</span></code>.</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">theorem</span> <span class="n">schroeder_bernstein</span> <span class="o">{</span><span class="n">f</span> <span class="o">:</span> <span class="n">&#945;</span> <span class="bp">&#8594;</span> <span class="n">&#946;</span><span class="o">}</span> <span class="o">{</span><span class="n">g</span> <span class="o">:</span> <span class="n">&#946;</span> <span class="bp">&#8594;</span> <span class="n">&#945;</span><span class="o">}</span> <span class="o">(</span><span class="n">hf</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">f</span><span class="o">)</span> <span class="o">(</span><span class="n">hg</span> <span class="o">:</span> <span class="n">Injective</span> <span class="n">g</span><span class="o">)</span> <span class="o">:</span>
     <span class="bp">&#8707;</span> <span class="n">h</span> <span class="o">:</span> <span class="n">&#945;</span> <span class="bp">&#8594;</span> <span class="n">&#946;</span><span class="o">,</span> <span class="n">Bijective</span> <span class="n">h</span> <span class="o">:=</span>
-  <span class="o">&#10216;</span><span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span><span class="o">,</span> <span class="n">sb_injective</span> <span class="n">f</span> <span class="n">g</span> <span class="n">hf</span> <span class="n">hg</span><span class="o">,</span> <span class="n">sb_surjective</span> <span class="n">f</span> <span class="n">g</span> <span class="n">hf</span> <span class="n">hg</span><span class="o">&#10217;</span>
+  <span class="o">&#10216;</span><span class="n">sbFun</span> <span class="n">f</span> <span class="n">g</span><span class="o">,</span> <span class="n">sb_injective</span> <span class="n">f</span> <span class="n">g</span> <span class="n">hf</span><span class="o">,</span> <span class="n">sb_surjective</span> <span class="n">f</span> <span class="n">g</span> <span class="n">hg</span><span class="o">&#10217;</span>
 </pre></div>
 </div>
 </section>

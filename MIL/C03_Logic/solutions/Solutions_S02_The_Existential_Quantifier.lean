@@ -33,10 +33,10 @@ example (lbf : FnHasLb f) (lbg : FnHasLb g) : FnHasLb fun x ↦ f x + g x := by
   exact add_le_add (lbfa x) (lbgb x)
 
 example {c : ℝ} (ubf : FnHasUb f) (h : c ≥ 0) : FnHasUb fun x ↦ c * f x := by
-  rcases ubf with ⟨a, lbfa⟩
+  rcases ubf with ⟨a, ubfa⟩
   use c * a
   intro x
-  exact mul_le_mul_of_nonneg_left (lbfa x) h
+  exact mul_le_mul_of_nonneg_left (ubfa x) h
 
 end
 
@@ -62,12 +62,12 @@ open Function
 example {c : ℝ} (h : c ≠ 0) : Surjective fun x ↦ c * x := by
   intro x
   use x / c
-  dsimp; rw [mul_div_cancel' _ h]
+  dsimp; rw [mul_div_cancel₀ _ h]
 
 example {c : ℝ} (h : c ≠ 0) : Surjective fun x ↦ c * x := by
   intro x
   use x / c
-  field_simp [h] ; ring
+  field_simp
 
 end
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1. Introduction &mdash; Mathematics in Lean 0.1 documentation</title>
@@ -13,11 +13,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,11 +30,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Mathematics in Lean
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Mathematics in Lean
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -74,8 +78,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li><span class="section-number">1. </span>Introduction</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>Introduction</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/C01_Introduction.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -286,7 +290,7 @@ tactic proofs are often easier and quicker to write than
 proof terms.
 There isn&#8217;t a sharp distinction between the two:
 tactic proofs can be inserted in proof terms,
-as we did with the phrase <code class="docutils literal notranslate"><span class="pre">by</span> <span class="pre">rw</span> <span class="pre">[hk,</span> <span class="pre">mul_left_comm]</span></code> in the example above.
+as we did with the phrase <code class="docutils literal notranslate"><span class="pre">by</span> <span class="pre">rw</span> <span class="pre">[hk,</span> <span class="pre">mul_add]</span></code> in the example above.
 We will also see that, conversely,
 it is often useful to insert a short proof term in the middle of a tactic proof.
 That said, in this book, our emphasis will be on the use of tactics.</p>
@@ -338,13 +342,15 @@ Your life may never be the same.</p>
 infrastructure for running this tutorial in VS Code,
 and to Scott Morrison and Mario Carneiro for help porting it from Lean 4.
 We are also grateful for help and corrections from
-Julian Berman, Alex Best,
-Bulwi Cha, Bryan Gin-ge Chen, Mauricio Collaris, Johan Commelin, Mark Czubin,
-Denis Gorbachev, Winston de Greef,
+Takeshi Abe, Julian Berman, Alex Best,
+Bulwi Cha, Bryan Gin-ge Chen, Steven Clontz, Mauricio Collaris, Johan Commelin, Mark Czubin,
+Alexandru Duca, Denis Gorbachev, Winston de Greef,
 Mathieu Guay-Paquet, Julian K&#252;lshammer,
 Martin C. Martin,
 Giovanni Mascellani, Isaiah Mindich, Hunter Monroe, Pietro Monticone, Oliver Nash,
-Bartosz Piotrowski, Nicolas Rolland, Guilherme Silva, Floris van Doorn, and Eric Wieser.
+Bartosz Piotrowski, Nicolas Rolland, Keith Rush, Guilherme Silva,
+Pedro S&#225;nchez Terraf,
+Floris van Doorn, and Eric Wieser.
 Our work has been partially supported by the Hoskinson Center for
 Formal Mathematics.</p>
 </section>

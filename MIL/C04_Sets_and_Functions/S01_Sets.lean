@@ -1,6 +1,5 @@
 import Mathlib.Data.Set.Lattice
-import Mathlib.Data.Nat.Prime
-import Mathlib.Data.Nat.Parity
+import Mathlib.Data.Nat.Prime.Basic
 import MIL.Common
 
 section
@@ -23,9 +22,6 @@ example (h : s ⊆ t) : s ∩ u ⊆ t ∩ u := by
 example (h : s ⊆ t) : s ∩ u ⊆ t ∩ u := by
   intro x xsu
   exact ⟨h xsu.1, xsu.2⟩
-
-theorem foo (h : s ⊆ t) : s ∩ u ⊆ t ∩ u :=
-  fun x ⟨xs, xu⟩ ↦ ⟨h xs, xu⟩
 
 example (h : s ⊆ t) : s ∩ u ⊆ t ∩ u :=
   fun x ⟨xs, xu⟩ ↦ ⟨h xs, xu⟩

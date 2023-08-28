@@ -143,7 +143,10 @@ example {c : ℝ} : Surjective fun x ↦ x + c := by
   dsimp; ring
 
 example {c : ℝ} (h : c ≠ 0) : Surjective fun x ↦ c * x := by
-  sorry
+  intro x
+  use (c⁻¹ * x)
+  dsimp
+  exact mul_inv_cancel_left₀ h x
 
 example (x y : ℝ) (h : x - y ≠ 0) : (x ^ 2 - y ^ 2) / (x - y) = x + y := by
   field_simp [h]
@@ -163,6 +166,8 @@ variable {α : Type*} {β : Type*} {γ : Type*}
 variable {g : β → γ} {f : α → β}
 
 example (surjg : Surjective g) (surjf : Surjective f) : Surjective fun x ↦ g (f x) := by
-  sorry
-
+  intro z
+  rcases surjg z with ⟨y, rfl⟩
+  rcases surjf y with ⟨x, rfl⟩
+  use x
 end

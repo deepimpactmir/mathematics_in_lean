@@ -152,14 +152,14 @@ example {X : Type*} [MetricSpace X] [CompactSpace X] {Y : Type*} [MetricSpace Y]
   · use 1, by norm_num
     intro x y _
     have : (x, y) ∉ K := by simp [hK]
-    simpa using this
+    simpa [K] using this
   · rcases K_cpct.exists_forall_le hK continuous_dist.continuousOn with ⟨⟨x₀, x₁⟩, xx_in, H⟩
     use dist x₀ x₁
     constructor
     · change _ < _
       rw [dist_pos]
       intro h
-      have : ε ≤ 0 := by simpa [*] using xx_in
+      have : ε ≤ 0 := by simpa [K, φ, *] using xx_in
       linarith
     · intro x x'
       contrapose!
@@ -339,7 +339,7 @@ example [CompleteSpace X] (f : ℕ → Set X) (ho : ∀ n, IsOpen (f n)) (hd : �
     have I :=
       calc
         closedBall (c (n + 1)) (r (n + 1)) ⊆ closedBall (c n) (r n) :=
-          (incl n).trans (inter_subset_left _ _)
+          (incl n).trans Set.inter_subset_left
         _ ⊆ closedBall (c n) (B n) := closedBall_subset_closedBall (rB n)
 
     exact I A
@@ -353,7 +353,7 @@ example [CompleteSpace X] (f : ℕ → Set X) (ho : ∀ n, IsOpen (f n)) (hd : �
     intro n
     refine' Nat.le_induction _ fun m hnm h ↦ _
     · exact Subset.rfl
-    · exact (incl m).trans ((Set.inter_subset_left _ _).trans h)
+    · exact (incl m).trans (Set.inter_subset_left.trans h)
   have yball : ∀ n, y ∈ closedBall (c n) (r n) := by
     intro n
     refine' isClosed_ball.mem_of_tendsto ylim _
@@ -363,7 +363,7 @@ example [CompleteSpace X] (f : ℕ → Set X) (ho : ∀ n, IsOpen (f n)) (hd : �
   · suffices ∀ n, y ∈ f n by rwa [Set.mem_iInter]
     intro n
     have : closedBall (c (n + 1)) (r (n + 1)) ⊆ f n :=
-      Subset.trans (incl n) (inter_subset_right _ _)
+      Subset.trans (incl n) Set.inter_subset_right
     exact this (yball (n + 1))
   calc
     dist y x ≤ r 0 := yball 0
