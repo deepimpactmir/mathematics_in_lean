@@ -63,7 +63,7 @@ example (h : 1 ≤ a) (h' : b ≤ c) : 2 + a + exp b ≤ 3 * a + exp c := by
 
 #check (exp_le_exp : exp a ≤ exp b ↔ a ≤ b)
 #check (exp_lt_exp : exp a < exp b ↔ a < b)
-#check (log_le_log : 0 < a → 0 < b → (log a ≤ log b ↔ a ≤ b))
+#check (log_le_log : 0 < a → a ≤ b → log a ≤ log b)
 #check (log_lt_log : 0 < a → a < b → log a < log b)
 #check (add_le_add : a ≤ b → c ≤ d → a + c ≤ b + d)
 #check (add_le_add_left : a ≤ b → ∀ c, c + a ≤ c + b)
@@ -89,15 +89,16 @@ example (h₀ : a ≤ b) (h₁ : c < d) : a + exp c + e < b + exp d + e := by
   apply le_refl
 
 example (h₀ : d ≤ e) : c + exp (a + d) ≤ c + exp (a + e) := by
-  apply add_le_add_left
-  · apply exp_le_exp.mpr (add_le_add_left h₀ a)
+  have : exp (a + d) ≤ exp (a + e) := by
+    rw [exp_le_exp]
+    linarith
+  linarith [this]
 
 example : (0 : ℝ) < 1 := by norm_num
 
 example (h : a ≤ b) : log (1 + exp a) ≤ log (1 + exp b) := by
   have h₀ : 0 < 1 + exp a := by linarith [exp_pos a]
-  have h₁ : 0 < 1 + exp b := by linarith [exp_pos b]
-  apply (log_le_log h₀ h₁).mpr
+  apply log_le_log h₀
   apply add_le_add_left (exp_le_exp.mpr h)
 
 example : 0 ≤ a ^ 2 := by
@@ -105,8 +106,10 @@ example : 0 ≤ a ^ 2 := by
   exact sq_nonneg a
 
 example (h : a ≤ b) : c - exp b ≤ c - exp a := by
-  -- refine sub_le_sub_left ?h c
-  -- exact exp_le_exp.mpr h
+  apply sub_le_sub_left
+  exact exp_le_exp.mpr h
+
+example (h : a ≤ b) : c - exp b ≤ c - exp a := by
   linarith [exp_le_exp.mpr h]
 
 example : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
@@ -117,10 +120,8 @@ example : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
 
   calc
     2 * a * b = 2 * a * b + 0 := by ring
-    _ ≤ 2 * a * b + (a ^ 2 - 2 * a * b + b ^ 2) :=
-      add_le_add (le_refl _) h
+    _ ≤ 2 * a * b + (a ^ 2 - 2 * a * b + b ^ 2) := add_le_add (le_refl _) h
     _ = a ^ 2 + b ^ 2 := by ring
-
 
 example : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
   have h : 0 ≤ a ^ 2 - 2 * a * b + b ^ 2
@@ -129,6 +130,21 @@ example : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
     _ ≥ 0 := by apply pow_two_nonneg
   linarith
 
+example : |a * b| ≤ (a ^ 2 + b ^ 2) / 2 := by
+  apply abs_le'.mpr
+  constructor
+  · have h : 0 ≤ a ^ 2 - 2 * a * b + b ^ 2
+    calc
+      a ^ 2 - 2 * a * b + b ^ 2 = (a - b) ^ 2 := by ring
+      _ ≥ 0 := by apply pow_two_nonneg
+    linarith
+  have h : 0 ≤ a ^ 2 + 2 * a * b + b ^ 2
+  calc
+      a ^ 2 + 2 * a * b + b ^ 2 = (a + b) ^ 2 := by ring
+      _ ≥ 0 := by apply pow_two_nonneg
+  linarith
+
+-- alternatively
 theorem fact1 : a * b * 2 ≤ a ^ 2 + b ^ 2 := by
   have h : 0 ≤ a ^ 2 - 2 * a * b + b ^ 2
   calc
